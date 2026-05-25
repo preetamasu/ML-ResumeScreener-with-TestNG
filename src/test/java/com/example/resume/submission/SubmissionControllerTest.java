@@ -67,5 +67,19 @@ public class SubmissionControllerTest extends AbstractTestNGSpringContextTests {
 
     }
 
+    @Test
+    public void SubmissionIfMlPredictionFails() throws Exception{
+        when(mlClientService.predict(anyString(),anyString())).thenThrow(new RuntimeException("Cannot predict"));
+
+        String requestbody = """
+                {
+                  "resumeText": "Java Spring Boot resume",
+                                    "jobDescription": "Backend developer job"
+                }
+                """;
+        mockMvc.perform(post("/api/v1/submissions").contentType(MediaType.APPLICATION_JSON).content(requestbody)).andDo(print()).andExpect(jsonPath("$.submissionStatus").value("FAILED"));
+
+    }
+
 
 }
