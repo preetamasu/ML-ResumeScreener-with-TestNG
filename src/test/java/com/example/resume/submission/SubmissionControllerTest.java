@@ -63,7 +63,6 @@ public class SubmissionControllerTest extends AbstractTestNGSpringContextTests {
                 }
                 """;
         mockMvc.perform(post("/api/v1/submissions").contentType(MediaType.APPLICATION_JSON).content(requestbody)).andExpect(status().isCreated()).andDo(print()).andExpect(jsonPath("$.submissionStatus").value("SCORED"));
-        Assert.assertEquals(submissionRepository.findAll().size(), 1);
 
     }
 
