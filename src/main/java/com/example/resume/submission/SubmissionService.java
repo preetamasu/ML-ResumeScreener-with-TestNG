@@ -59,7 +59,7 @@ public class SubmissionService {
 
     public SubmissionResponse getSubmissionById(Long id){
         Submission submission = submissionRepository.findById(id).orElseThrow(()->
-                new ResourceNotFoundException("We cannot find an submission with that id"+id));
+                new ResourceNotFoundException("We cannot find an submission with that id "+id));
         return toResponse(submission);
     }
     private SubmissionResponse toResponse(Submission submission){
