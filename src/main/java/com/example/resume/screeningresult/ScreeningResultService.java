@@ -30,7 +30,7 @@ public class ScreeningResultService {
         result.setModelVersion(response.modelVersion());
         result.setCreatedAt(LocalDateTime.now());
         screeningResultRepository.save(result);
-       return toResponse(result);
+        return toResponse(result);
     }
 
     public ScreeningResponse getScreeningResultBySubmissionId(Long id){
