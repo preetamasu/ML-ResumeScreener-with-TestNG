@@ -12,7 +12,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.springframework.test.web.servlet.MockMvc;
-import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import java.time.LocalDateTime;
@@ -100,6 +99,14 @@ public class SubmissionControllerTest extends AbstractTestNGSpringContextTests {
                 .andExpect(jsonPath("$.jobDescription").value("Backend developer job"));
 
     }
+
+    @Test
+    public void getSubmissionByIdIfIdDoesntExists() throws Exception{
+
+       mockMvc.perform(get("/api/v1/submissions/2999")).andExpect(status().isNotFound());
+
+    }
+
 
 
 }
