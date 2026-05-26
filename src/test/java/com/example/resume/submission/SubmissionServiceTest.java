@@ -117,7 +117,7 @@ public class SubmissionServiceTest {
     }
 
 
-    @Test
+    @Test(priority = 1)
     public void createSubmission(){
 
         SubmissionRequest submissionRequest = new SubmissionRequest(

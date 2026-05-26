@@ -2,14 +2,17 @@ package com.example.resume.submission;
 
 import com.example.resume.ml.MlClientService;
 import com.example.resume.ml.MlPredictionResponse;
+import com.example.resume.screeningresult.ScreeningResultRepository;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
+import jakarta.transaction.Transactional;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -30,6 +33,9 @@ public class SubmissionFunctionalTests extends AbstractTestNGSpringContextTests 
     private int port;
 
     @Autowired
+    private ScreeningResultRepository screeningResultRepository;
+
+    @Autowired
     private SubmissionRepository submissionRepository;
 
     @MockitoBean
@@ -42,6 +48,7 @@ public class SubmissionFunctionalTests extends AbstractTestNGSpringContextTests 
     }
 
     @Test
+    @Transactional
     public void createSubmissionReturnsScored(){
         when(mlClientService.predict(anyString(),anyString())).thenReturn(new MlPredictionResponse(
                 0.85, 85.0, "test-model-v1", "Test prediction"
@@ -65,6 +72,7 @@ public class SubmissionFunctionalTests extends AbstractTestNGSpringContextTests 
     }
 
     @Test
+    @Transactional
     public void createSubmissionIfMlPredictionFails(){
         when(mlClientService.predict(anyString(),anyString())).thenThrow(
                 new RuntimeException("Cannot predict")
@@ -106,11 +114,13 @@ public class SubmissionFunctionalTests extends AbstractTestNGSpringContextTests 
     }
 
     @Test
+
     public void findBySubmissionIdIfIdNotExists(){
         given()
                 .when().get("/api/v1/submissions/9999")
                 .then()
                 .statusCode(404);
     }
+
 
 }
