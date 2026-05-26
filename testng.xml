@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="ResumeScreenerSuite" parallel="true" thread-count="3" >
+<suite name="ResumeScreenerSuite"  >
     <test name="Unit tests">
         <classes>
             <class name="com.example.resume.submission.SubmissionServiceTest"/>
